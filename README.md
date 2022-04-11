@@ -177,4 +177,8 @@ Change user and group to librenms:
 user = librenms
 group = librenms
 ```
+Change listen to a unique name
 
+```
+listen = /run/php-fpm-librenms.sock
+```
