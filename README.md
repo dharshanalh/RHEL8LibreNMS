@@ -132,3 +132,12 @@ Within the [mysqld] section add following two parameters
 innodb_file_per_table=1
 lower_case_table_names=0
 ```
+
+```
+# systemctl enable mariadb
+# systemctl restart mariadb
+
+OR
+
+# systemctl enable --now mariadb.service
+```
