@@ -317,3 +317,9 @@ OR
 firewall-cmd --zone public --add-service http --add-service https
 firewall-cmd --permanent --zone public --add-service http --add-service https
 ```
+Enable and Restart Apache and PHP-FPM service
+
+```
+systemctl enable --now httpd
+systemctl enable --now php-fpm
+```
