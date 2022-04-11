@@ -141,3 +141,24 @@ OR
 
 # systemctl enable --now mariadb.service
 ```
+
+Secure mariadb and set root password
+```
+# mysql_secure_installation
+Set root password? [Y/n] Y
+New password:                            <MARIADB_ROOT_PASSWORD>
+Re-enter new password:                   <MARIADB_ROOT_PASSWORD>
+Password updated successfully!
+```
+
+Create required librenms DataBase with librenms User having required DB permissions 
+```
+mysql -u root
+
+CREATE DATABASE librenms CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'librenms'@'localhost' IDENTIFIED BY 'MARIADB_USER_PASSWORD';
+GRANT ALL PRIVILEGES ON librenms.* TO 'librenms'@'localhost';
+FLUSH PRIVILEGES;
+exit
+
+```
