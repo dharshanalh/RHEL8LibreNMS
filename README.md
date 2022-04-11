@@ -297,3 +297,23 @@ Add Listen 443 below Listen 80
 # vim httpd.conf
 Listen 443
 ```
+
+Check Apache configuration files for syntax errors
+
+```
+# apachectl configtest
+```
+
+Enable HTTP and HTTPS services in the firewalld
+
+```
+firewall-cmd --add-service=http
+firewall-cmd --add-service=http --permanent
+firewall-cmd --add-service=https
+firewall-cmd --add-service=https -–permanent
+
+OR
+
+firewall-cmd --zone public --add-service http --add-service https
+firewall-cmd --permanent --zone public --add-service http --add-service https
+```
