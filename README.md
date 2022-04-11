@@ -20,8 +20,27 @@ Check current Linux kernal
 uname -r
 ```
 
-output of above command
+Output of above command
 
 ```
 5.4.17-2102.201.3.el8uek.x86_64
 ```
+
+Check Redhat release
+
+```
+cat /etc/redhat-release
+```
+
+Output of above command
+
+```
+Red Hat Enterprise Linux release 8.5 (Ootpa)
+```
+
+Install EPEL (Extra Packages for Enterprise Linux)
+
+```
+dnf -y install epel-release
+```
+
