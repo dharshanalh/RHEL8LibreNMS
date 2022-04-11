@@ -185,6 +185,98 @@ listen = /run/php-fpm-librenms.sock
 
 ### Configure Apache Web Server
 
+Install mod_ssl apache module
 ```
 # dnf -y install mod_ssl
+```
+
+Create SSL certificate
+```
+# openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout librenms.domain.com.key -out librenms.domain.com.crt
+Generating a RSA private key
+....................................................................+++++
+.....................................................+++++
+writing new private key to 'librenms.hitachi-dps.com.key'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [XX]:LK
+State or Province Name (full name) []:Western
+Locality Name (eg, city) [Default City]:Colombo
+Organization Name (eg, company) [Default Company Ltd]: Company Name
+Organizational Unit Name (eg, section) []: IT
+Common Name (eg, your name or your server's hostname) []: librenms.domain.com
+Email Address []:admin@hdomain.com
+```
+
+Move generated certificates
+```
+# mv librenms.domain.com.crt tls/certs/
+# mv librenms.domain.com.key tls/private/
+```
+
+Configure virtual host in Apache
+
+```
+# vim /etc/httpd/conf.d/librenms.conf
+<VirtualHost *:80>
+  	DocumentRoot /opt/librenms/html/
+  	ServerName www.librenms.domain.com
+  	ServerAlias  librenms.domain.com
+        ErrorLog /var/log/librenms.domain.com_http_error.log
+        CustomLog /var/log/librenms.domain.com_http_access.log combined
+
+  AllowEncodedSlashes NoDecode
+  <Directory "/opt/librenms/html/">
+    Require all granted
+    AllowOverride All
+    Options FollowSymLinks MultiViews
+  </Directory>
+
+  # Enable http authorization headers
+  <IfModule setenvif_module>
+    SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
+  </IfModule>
+
+  <FilesMatch ".+\.php$">
+    SetHandler "proxy:unix:/run/php-fpm-librenms.sock|fcgi://localhost"
+  </FilesMatch>
+</VirtualHost>
+
+
+<VirtualHost *:443>
+  	DocumentRoot /opt/librenms/html/
+  	ServerName www.librenms.domain.com
+  	ServerAlias  librenms.domain.com
+        ErrorLog /var/log/librenms.domain.com_https_error.log
+        CustomLog /var/log/librenms.domain.com_https_access.log combined
+
+	SSLEngine on
+	SSLProtocol all -SSLv2 -SSLv3
+	SSLCipherSuite HIGH:!MEDIUM:!aNULL:!MD5:!RC4
+	SSLCertificateFile /etc/pki/tls/certs/librenms.domain.com.crt
+	SSLCertificateKeyFile /etc/pki/tls/private/librenms.domain.com.key
+
+  AllowEncodedSlashes NoDecode
+  <Directory "/opt/librenms/html/">
+    Require all granted
+    AllowOverride All
+    Options FollowSymLinks MultiViews
+  </Directory>
+
+  # Enable http authorization headers
+  <IfModule setenvif_module>
+    SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
+  </IfModule>
+
+  <FilesMatch ".+\.php$">
+    SetHandler "proxy:unix:/run/php-fpm-librenms.sock|fcgi://localhost"
+  </FilesMatch>
+
+</VirtualHost>
 ```
