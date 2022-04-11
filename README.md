@@ -346,3 +346,32 @@ Configure the contexts needed by LibreNMS
 # setsebool -P httpd_execmem 1
 # chcon -t httpd_sys_rw_content_t /opt/librenms/.env
 ```
+Allow fping
+
+Create a SELinux policy to allow fping by httpd_t context types.
+
+```
+# cd ~
+# pwd
+/root
+# vim http_fping.tt
+module http_fping 1.0;
+
+require {
+type httpd_t;
+class capability net_raw;
+class rawip_socket { getopt create setopt write read };
+}
+
+#============= httpd_t ==============
+allow httpd_t self:capability net_raw;
+allow httpd_t self:rawip_socket { getopt create setopt write read };
+```
+
+Load and apply this SELinux policy
+
+```
+# checkmodule -M -m -o http_fping.mod http_fping.tt
+# semodule_package -o http_fping.pp -m http_fping.mod
+# semodule -i http_fping.pp
+```
