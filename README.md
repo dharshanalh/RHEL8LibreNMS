@@ -280,3 +280,20 @@ Configure virtual host in Apache
 
 </VirtualHost>
 ```
+
+Remove Apache Default configuration
+
+```
+# cd /etc/httpd/conf.d/
+# mv welcome.conf welcome.conf.bak
+# mv ssl.conf ssl.conf.bak
+```
+
+Enable https
+
+Add Listen 443 below Listen 80
+```
+# cd /etc/httpd/conf
+# vim httpd.conf
+Listen 443
+```
