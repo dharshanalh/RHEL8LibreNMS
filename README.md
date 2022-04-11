@@ -80,9 +80,9 @@ Set permissions
 
 # getfacl /opt/librenms/rrd
 getfacl: Removing leading '/' from absolute path names
- file: opt/librenms/rrd
- owner: librenms
- group: librenms
+file: opt/librenms/rrd
+owner: librenms
+group: librenms
 user::rwx
 group::rwx
 other::r-x
@@ -92,3 +92,10 @@ default:other::r-x
 
 ```
 
+Install PHP dependencies
+
+```
+su - librenms
+./scripts/composer_wrapper.php install --no-dev
+exit
+```
