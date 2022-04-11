@@ -439,3 +439,10 @@ OR
 
 systemctl enable --now snmpd.service
 ```
+
+Setup LibreNMS Cron Jobs
+
+```
+# cp /opt/librenms/librenms.nonroot.cron /etc/cron.d/librenms
+# cp /opt/librenms/misc/librenms.logrotate /etc/logrotate.d/librenms
+```
