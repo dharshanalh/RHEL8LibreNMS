@@ -60,4 +60,9 @@ Add librenms user
 librenms:x:988:984::/opt/librenms:/bin/bash
 ```
 
+Download LibreNMS
 
+```
+cd /opt
+git clone https://github.com/librenms/librenms.git
+```
