@@ -123,7 +123,7 @@ TimeUSec=Thu 2022-04-07 14:05:10 +0530
 RTCTimeUSec=Thu 2022-04-07 14:05:10 +0530
 ```
 
-Configure MariaDB
+### Configure MariaDB
 
 Within the [mysqld] section add following two parameters
 
@@ -153,7 +153,7 @@ Password updated successfully!
 
 Create required librenms DataBase with librenms User having required DB permissions 
 ```
-#mysql -u root -p
+# mysql -u root -p
 
 CREATE DATABASE librenms CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER 'librenms'@'localhost' IDENTIFIED BY '<MARIADB_USER_PASSWORD>';
@@ -166,8 +166,8 @@ exit
 Configure PHP-FPM
 
 ```
-cp /etc/php-fpm.d/www.conf /etc/php-fpm.d/librenms.conf
-vim /etc/php-fpm.d/librenms.conf
+# cp /etc/php-fpm.d/www.conf /etc/php-fpm.d/librenms.conf
+# vim /etc/php-fpm.d/librenms.conf
 ```
 Locate and Change [www] to [librenms]
 
@@ -181,4 +181,10 @@ Change listen to a unique name
 
 ```
 listen = /run/php-fpm-librenms.sock
+```
+
+### Configure Apache Web Server
+
+```
+# dnf -y install mod_ssl
 ```
