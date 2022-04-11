@@ -153,12 +153,28 @@ Password updated successfully!
 
 Create required librenms DataBase with librenms User having required DB permissions 
 ```
-mysql -u root
+#mysql -u root -p
 
 CREATE DATABASE librenms CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'librenms'@'localhost' IDENTIFIED BY 'MARIADB_USER_PASSWORD';
+CREATE USER 'librenms'@'localhost' IDENTIFIED BY '<MARIADB_USER_PASSWORD>';
 GRANT ALL PRIVILEGES ON librenms.* TO 'librenms'@'localhost';
 FLUSH PRIVILEGES;
 exit
 
 ```
+
+Configure PHP-FPM
+
+```
+cp /etc/php-fpm.d/www.conf /etc/php-fpm.d/librenms.conf
+vim /etc/php-fpm.d/librenms.conf
+```
+Locate and Change [www] to [librenms]
+
+Change user and group to librenms:
+
+```
+user = librenms
+group = librenms
+```
+
