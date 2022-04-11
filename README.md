@@ -417,3 +417,25 @@ extend distro /usr/bin/distro
 #extend serial '/bin/cat /sys/firmware/devicetree/base/serial-number'
 ```
 
+Download snmp configuration script and place it in /usr/bin directory.
+
+```
+curl -o /usr/bin/distro https://raw.githubusercontent.com/librenms/librenms-agent/master/snmp/distro
+```
+
+Grant execution privileges to download file.
+
+```
+chmod +x /usr/bin/distro
+```
+
+Enable and start SNMPD service.
+
+```
+systemctl enable snmpd
+systemctl restart snmpd
+
+OR
+
+systemctl enable --now snmpd.service
+```
