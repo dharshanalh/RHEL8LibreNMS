@@ -450,3 +450,6 @@ Copy logrotate config
 ```
 # cp /opt/librenms/misc/librenms.logrotate /etc/logrotate.d/librenms
 ```
+
+Now Continue with the Web installer accessing the following URL
+(http://librenms.domain.com/install)
