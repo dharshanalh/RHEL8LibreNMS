@@ -375,3 +375,45 @@ Load and apply this SELinux policy
 # semodule_package -o http_fping.pp -m http_fping.mod
 # semodule -i http_fping.pp
 ```
+
+Enable lnms command completion
+
+```
+# ln -s /opt/librenms/lnms /usr/bin/lnms
+# cp /opt/librenms/misc/lnms-completion.bash /etc/bash_completion.d/
+```
+
+Configure snmpd
+
+```
+# cd /etc/snmp/
+# mv snmpd.conf snmpd.conf.bak
+# cp /opt/librenms/snmpd.conf.example /etc/snmp/snmpd.conf
+```
+Edit snmpd.conf file as follows
+```
+# vim snmpd.comf
+# Change RANDOMSTRINGGOESHERE to your preferred SNMP community string
+com2sec readonly  default         <COMUNITY_STRING>
+
+group MyROGroup v2c        readonly
+view all    included  .1                               80
+access MyROGroup ""      any       noauth    exact  all    none   none
+
+syslocation Rack, Room, Building, City, Country [Lat, Lon]
+syscontact Your Name <your@email.address>
+
+#OS Distribution Detection
+extend distro /usr/bin/distro
+
+#Hardware Detection
+# (uncomment for x86 platforms)
+#extend manufacturer '/bin/cat /sys/devices/virtual/dmi/id/sys_vendor'
+#extend hardware '/bin/cat /sys/devices/virtual/dmi/id/product_name'
+#extend serial '/bin/cat /sys/devices/virtual/dmi/id/product_serial'
+
+# (uncomment for ARM platforms)
+#extend hardware '/bin/cat /sys/firmware/devicetree/base/model'
+#extend serial '/bin/cat /sys/firmware/devicetree/base/serial-number'
+```
+
