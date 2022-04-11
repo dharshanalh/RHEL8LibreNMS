@@ -35,3 +35,19 @@ dnf -y install epel-release
 ```
 
 Reset PHP module in yum repository to default stream.
+
+```
+dnf module reset php
+```
+
+Enable PHP 7.3
+
+```
+dnf module enable php:7.3
+```
+
+Install required packeges
+
+```
+dnf install bash-completion cronie fping git httpd ImageMagick mariadb-server mtr net-snmp net-snmp-utils nmap php-fpm php-cli php-common php-curl php-gd php-gmp php-json php-mbstring php-process php-snmp php-xml php-zip php-mysqlnd python3 python3-PyMySQL python3-redis python3-memcached python3-pip python3-systemd rrdtool unzip
+```
