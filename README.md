@@ -2,6 +2,6 @@
 
 ## Install RHEL 8 in LibreNMS
 
-'''
+```
 sudo -s
-'''
+```
