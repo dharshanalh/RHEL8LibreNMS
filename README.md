@@ -320,6 +320,29 @@ firewall-cmd --permanent --zone public --add-service http --add-service https
 Enable and Restart Apache and PHP-FPM service
 
 ```
-systemctl enable --now httpd
-systemctl enable --now php-fpm
+# systemctl enable httpd
+# systemctl restart httpd
+# systemctl enable php-fpm
+# systemctl restart php-fpm
+
+OR
+
+# systemctl enable --now httpd
+# systemctl enable --now php-fpm
+```
+
+Install the policy tool for SELinux
+
+```
+# dnf install policycoreutils-python-utils
+```
+
+Configure the contexts needed by LibreNMS
+```
+# semanage fcontext -a -t httpd_sys_content_t '/opt/librenms/html(/.*)?'
+# semanage fcontext -a -t httpd_sys_rw_content_t '/opt/librenms/(logs|rrd|storage)(/.*)?'
+# restorecon -RFvv /opt/librenms
+# setsebool -P httpd_can_sendmail=1
+# setsebool -P httpd_execmem 1
+# chcon -t httpd_sys_rw_content_t /opt/librenms/.env
 ```
