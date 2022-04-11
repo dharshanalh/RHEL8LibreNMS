@@ -444,5 +444,9 @@ Setup LibreNMS Cron Jobs
 
 ```
 # cp /opt/librenms/librenms.nonroot.cron /etc/cron.d/librenms
+```
+
+Copy logrotate config
+```
 # cp /opt/librenms/misc/librenms.logrotate /etc/logrotate.d/librenms
 ```
