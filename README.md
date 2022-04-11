@@ -95,7 +95,40 @@ default:other::r-x
 Install PHP dependencies
 
 ```
-su - librenms
-./scripts/composer_wrapper.php install --no-dev
-exit
+# su - librenms
+# ./scripts/composer_wrapper.php install --no-dev
+# exit
+```
+
+Set timezone
+
+Find and set following variable
+
+```
+# vim /etc/php.ini
+date.timezone = Asia/Colombo
+```
+
+Set the same timezone in Linux operating system
+
+```
+# timedatectl set-timezone Asia/Colombo
+# timedatectl show
+Timezone=Asia/Colombo
+LocalRTC=no
+CanNTP=yes
+NTP=no
+NTPSynchronized=no
+TimeUSec=Thu 2022-04-07 14:05:10 +0530
+RTCTimeUSec=Thu 2022-04-07 14:05:10 +0530
+```
+
+Configure MariaDB
+
+Within the [mysqld] section add following two parameters
+
+```
+# vim /etc/my.cnf.d/mariadb-server.cnf
+innodb_file_per_table=1
+lower_case_table_names=0
 ```
